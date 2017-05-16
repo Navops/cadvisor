@@ -87,6 +87,16 @@ func (self *Client) Attributes() (attr *v2.Attributes, err error) {
 	return
 }
 
+func (self *Client) Summary() (attr *v2.Summary, err error) {
+	u := self.summaryUrl()
+	ret := new(v2.Summary)
+	if err = self.httpGetJsonData(ret, nil, u, "summary"); err != nil {
+		return
+	}
+	attr = ret
+	return
+}
+
 // Stats returns stats for the requested container.
 func (self *Client) Stats(name string, request *v2.RequestOptions) (map[string]v2.ContainerInfo, error) {
 	u := self.statsUrl(name)
@@ -122,6 +132,10 @@ func (self *Client) attributesUrl() string {
 
 func (self *Client) statsUrl(name string) string {
 	return self.baseUrl + path.Join("stats", name)
+}
+
+func (self *Client) summaryUrl() string {
+	return self.baseUrl + path.Join("summary")
 }
 
 func (self *Client) httpGetResponse(postData interface{}, urlPath, infoName string) ([]byte, error) {

@@ -93,6 +93,10 @@ func GetAttributes(mi *v1.MachineInfo, vi *v1.VersionInfo) Attributes {
 	}
 }
 
+type Summary struct {
+	SummaryStats DerivedStats `json:"/"`
+}
+
 // MachineStats contains usage statistics for the entire machine.
 type MachineStats struct {
 	// The time of this stat point.
